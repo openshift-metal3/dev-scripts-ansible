@@ -1,0 +1,19 @@
+- name: "Check for local XFS filesystems"
+  hosts: localhost
+  tasks:
+  - shell: df -T | grep xfs | awk '{print $7}'
+    register: has_xfs_filesystem
+
+- name: "Check xfs_info for d_type being set"
+  hosts: localhost
+  tasks:
+  - shell: xfs_info {{ item }} | grep ftype=1
+    loop: "{{ has_xfs_filesystem }}"
+
+- name: "Fail if local XFS filesystems do not support d_type"
+  hosts: localhost
+  tasks:
+    - fail:
+        msg: "One or more filesystems does not support d_type"
+      when:
+        has_xfs_filesystem

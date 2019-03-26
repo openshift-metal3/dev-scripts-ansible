@@ -1,0 +1,4 @@
+- name: Add the '{{ rhhi_user }}' user to the target system
+  user:
+    name: {{ rhhi_user }}
+    comment: RHHI User

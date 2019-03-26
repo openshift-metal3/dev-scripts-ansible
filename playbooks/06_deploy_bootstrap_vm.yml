@@ -1,0 +1,8 @@
+- name: "06_deploy_bootstrap_vm.sh"
+  hosts:  localhost
+  tasks:
+  - name: "06_deploy_bootstrap_vm.sh"
+    shell: "{{ dev_scripts_dir }}/06_deploy_bootstrap_vm.sh" 
+    args:
+      chdir: "{{ dev_scripts_dir }}"
+      creates: "{{ dev_scripts_dir }}/logs/06_deploy_bootstrap_vm*.log"

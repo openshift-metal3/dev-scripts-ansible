@@ -1,0 +1,8 @@
+- name: "07_deploy_masters.sh"
+  hosts:  localhost
+  tasks:
+  - name: "07_deploy_masters.sh"
+    shell: "{{ dev_scripts_dir }}/07_deploy_masters.sh" 
+    args:
+      chdir: "{{ dev_scripts_dir }}"
+      creates: "{{ dev_scripts_dir }}/logs/07_deploy_masters*.log"

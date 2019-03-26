@@ -1,0 +1,10 @@
+---
+# Define the OpenShift Online Pull Secret
+# https://cloud.openshift.com/clusters/install#pull-secret
+pull_secret: ''
+
+# Define the non-root user to use on virthost
+rhhi_user: rhhi
+
+# Define the dev-scripts directory; this may become useful later on
+dev_scripts_dir: "/home/{{ rhhi_user }}/dev-scripts"

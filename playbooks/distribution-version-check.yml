@@ -1,0 +1,8 @@
+- name: "Check distribution requirements"
+  hosts: localhost
+  tasks:
+    - fail:
+        msg: "dev-scripts requires CentOS version 7.5 or greater"
+      when:
+        - ansible_facts['distribution'] != "CentOS"
+        - ansible_facts['ansible_distribution_version'] < "7.5"
