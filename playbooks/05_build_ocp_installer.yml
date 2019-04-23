@@ -1,5 +1,5 @@
 - name: "05_build_ocp_installer.sh"
-  hosts:  localhost
+  hosts:  virthost
   tasks:
   - name: "05_build_ocp_installer.sh"
     shell: "{{ dev_scripts_dir }}/05_build_ocp_installer.sh" 

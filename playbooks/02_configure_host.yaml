@@ -1,5 +1,5 @@
 - name: "02_configure_host.sh"
-  hosts:  localhost
+  hosts:  virthost
   tasks:
   - name: "02_configure_host.sh"
     shell: "{{ dev_scripts_dir }}/02_configure_host.sh" 

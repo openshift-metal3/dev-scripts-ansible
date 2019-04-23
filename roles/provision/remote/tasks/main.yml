@@ -1,0 +1,120 @@
+# Create `virt_host_key`, which we will use to log in to the target
+# host.  Note that this tasks runs on the ansible control host
+# (because of the `delegate_to: localhost`), and we will later copy
+# the public key to the appropriate location.
+- name: Create virthost access key
+  delegate_to: localhost
+  command: >
+    ssh-keygen -f {{ virt_host_key }} -N ''
+    -C 'ansible_generated_virt_host'
+    -t rsa -b 4096
+  args:
+    creates: "{{ virt_host_key }}"
+
+- when: not chrooted|bool
+  block:
+    - name: Ensure tuned is installed
+      package:
+        name: "tuned"
+        state: "present"
+      become: true
+
+    - name: Ensure tuned is enabled and started
+      service:
+        name: "tuned"
+        enabled: "yes"
+        state: "started"
+      become: true
+
+    - name: Retrieve current tuned profile
+      command: tuned-adm active
+      register: tuned
+      changed_when: false
+
+    - name: Set tuned profile if not already set
+      command: tuned-adm profile "{{ tuned_profile }}"
+      become: true
+      when: tuned.stdout.find(tuned_profile) != 1
+
+    # Create a non-root user on the target host.  This is the user that
+    # will own the virtual infrastructure on which we deploy openstack.
+    - name: Create non-root user
+      user:
+        name: "{{ rhhi_user }}"
+        state: present
+        shell: /bin/bash
+        create_home: true
+      become: true
+
+- name: Get the non-root user UID
+  command: "id {{ rhhi_user }} -u"
+  register: rhhi_user_uid_output
+  changed_when: false
+  retries: 3
+  delay: 5
+  until: rhhi_user_uid_output is not failed
+
+- name: Get the non-root user homedir
+  shell: "getent passwd {{ rhhi_user }} | cut -d: -f6"
+  register: rhhi_user_homedir_output
+  changed_when: false
+
+- name: Save the non-root user UID
+  set_fact:
+    rhhi_user_uid: "{{ rhhi_user_uid_output.stdout }}"
+    cacheable: true
+
+- name: Save the non-root user homedir
+  set_fact:
+    rhhi_user_homedir: "{{ rhhi_user_homedir_output.stdout }}"
+    cacheable: true
+
+# Install the public component of `virt_host_key` in the
+# `.ssh/authorized_keys` file for the non-root user.
+- name: Configure non-root user authorized_keys
+  authorized_key:
+    user: "{{ ssh_user }}"
+    key: "{{ lookup('file', virt_host_key|quote + '.pub')|default('') }}"
+  become: true
+
+- name: Ensure polkit packages are installed
+  package:
+    name: "polkit"
+    state: "present"
+  become: true
+
+- name: Ensure XDG_RUNTIME_DIR is set
+  blockinfile:
+    path: "{{ rhhi_user_homedir }}/.bashrc"
+    create: true
+    block: |
+      # Setting up XDG_RUNTIME_DIR for creating non-essential runtime files and other file objects in accordance with
+      # https://standards.freedesktop.org/basedir-spec/basedir-spec-latest.html
+      if [[ -z "${XDG_RUNTIME_DIR}" && -d "/run/user/${UID}" ]] ; then
+          export XDG_RUNTIME_DIR="/run/user/${UID}"
+      fi
+  become: true
+  become_user: "{{ rhhi_user }}"
+
+# I'm not always root, but when I am it's because of `sudo`.
+- name: Grant sudo privileges to non-root user
+  copy:
+    content: |
+      {{ rhhi_user }} ALL=(ALL) NOPASSWD:ALL
+    dest: /etc/sudoers.d/{{ rhhi_user }}
+    owner: root
+    group: root
+    mode: 0440
+  become: true
+
+# This replaces the inventory entry for the virthost.  The original
+# entry had `ansible_user: root`, but from now on we will connect as
+# the non-root user.
+- name: Re-add the virthost to the inventory
+  add_host:
+    name: "{{ virthost }}"
+    groups: "virthost"
+    ansible_fqdn: "{{ virthost }}"
+    ansible_user: "{{ ssh_user }}"
+    ansible_host: "{{ virthost }}"
+    ansible_private_key_file: "{{ virt_host_key }}"

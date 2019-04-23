@@ -1,4 +1,9 @@
-- name: Add the '{{ rhhi_user }}' user to the target system
-  user:
-    name: {{ rhhi_user }}
-    comment: RHHI User
+- name: Add the "{{ rhhi_user }}" user to the target system
+  hosts: virthost
+  tasks:
+    - name: Add user
+      user:
+        name: "{{ rhhi_user }}"
+        comment: RHHI User
+
+

@@ -1,9 +1,12 @@
 - name: Grant sudo privileges to non-root user
-  copy:
-    content: |
-      {{ rhhi_user }} ALL=(ALL) NOPASSWD:ALL
-    dest: /etc/sudoers.d/{{ rhhi_user }}
-    owner: root
-    group: root
-    mode: 0440
-  become: true
+  hosts: virthost
+  tasks:
+  - name: Grant sudo
+    copy:
+      content: |
+        {{ rhhi_user }} ALL=(ALL) NOPASSWD:ALL
+      dest: "/etc/sudoers.d/{{ rhhi_user }}"
+      owner: root
+      group: root
+      mode: 0440
+      become: true

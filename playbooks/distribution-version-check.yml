@@ -1,5 +1,5 @@
 - name: "Check distribution requirements"
-  hosts: localhost
+  hosts: virthost
   tasks:
     - fail:
         msg: "dev-scripts requires CentOS version 7.5 or greater"

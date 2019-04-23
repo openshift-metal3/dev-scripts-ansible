@@ -1,5 +1,5 @@
 - name: "06_deploy_bootstrap_vm.sh"
-  hosts:  localhost
+  hosts:  virthost
   tasks:
   - name: "06_deploy_bootstrap_vm.sh"
     shell: "{{ dev_scripts_dir }}/06_deploy_bootstrap_vm.sh" 

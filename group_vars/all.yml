@@ -8,3 +8,11 @@ rhhi_user: rhhi
 
 # Define the dev-scripts directory; this may become useful later on
 dev_scripts_dir: "/home/{{ rhhi_user }}/dev-scripts"
+
+# This directory is used to store a variety of files generated
+# during the deploy process (ansible inventory, ssh configuration, ssh
+# key files, etc)
+local_working_dir: "{{ lookup('env', 'HOME') }}/.rhhi"
+
+# If running in chroot-like environments (containers)
+chrooted: false

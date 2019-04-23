@@ -1,5 +1,5 @@
 - name: "03_ocp_repo_sync.sh"
-  hosts:  localhost
+  hosts:  virthost
   tasks:
   - name: "03_ocp_repo_sync.sh"
     shell: "{{ dev_scripts_dir }}/03_ocp_repo_sync.sh" 

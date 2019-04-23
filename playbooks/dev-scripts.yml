@@ -1,0 +1,26 @@
+# Add the virthost to the in-memory inventory. The inventory is not
+# written out to disk unless you call the `tripleo-inventory` role.
+- name: Add the virthost to the inventory
+  hosts: localhost
+  tasks:
+    - name: Add virthost
+      add_host:
+        name: "{{ virthost }}"
+        groups: "virthost"
+        ansible_fqdn: "{{ virthost }}"
+        ansible_user: "root"
+        ansible_host: "{{ virthost }}"
+  tags:
+    - provision
+
+# The `provision.yml` playbook is responsible for
+# creating an inventory entry for our `virthost` and for creating an
+# unprivileged user on that host for use by our virtual environment.
+- import_playbook: provision.yml
+
+- import_playbook: check-pull-secret.yml
+- import_playbook: add-virthost-to-inventory.yml
+- import_playbook: distribution-version-check.yml
+#- import_playbook: add-rhhi-user.yml
+#- import_playbook: rhhi-user-sudoers.yml
+- import_playbook: install-prerequisite-packages.yml

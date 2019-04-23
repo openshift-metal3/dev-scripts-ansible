@@ -1,5 +1,5 @@
 - name: "04_setup_ironic.sh"
-  hosts:  localhost
+  hosts:  virthost
   tasks:
   - name: "04_setup_ironic.sh"
     shell: "{{ dev_scripts_dir }}/04_setup_ironic.sh" 

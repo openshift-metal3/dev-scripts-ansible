@@ -1,5 +1,5 @@
 - name: "09_deploy_kubevirt.sh"
-  hosts:  localhost
+  hosts:  virthost
   tasks:
   - name: "08_deploy_bmo.sh"
     shell: "{{ dev_scripts_dir }}/08_deploy_bmo.sh" 

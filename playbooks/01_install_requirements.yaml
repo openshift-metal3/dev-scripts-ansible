@@ -1,5 +1,5 @@
 - name: "01_install_requirements.sh"
-  hosts:  localhost
+  hosts:  virthost
   tasks:
   - name: "Run 01_install_requirements.sh"
     shell: "{{ dev_scripts_dir }}/01_install_requirements.sh" 

@@ -1,5 +1,5 @@
 - name: "Check to see if pull secret was defined"
-  hosts: localhost
+  hosts: virthost
   tasks:
   - git:
       repo:  https://github.com/openshift-metalkube/dev-scripts.git

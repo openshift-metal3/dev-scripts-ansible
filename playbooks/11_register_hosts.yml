@@ -1,5 +1,5 @@
 - name: "11_register_hosts.sh"
-  hosts:  localhost
+  hosts:  virthost
   tasks:
   - name: "11_register_hosts.sh"
     shell: "{{ dev_scripts_dir }}/11_register_hosts.sh"
