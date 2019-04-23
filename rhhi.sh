@@ -7,7 +7,8 @@ fi
 echo "$0 $@" > _rhhi.log
 exec &> >(tee -i -a _rhhi.log )
 
-source $OOOQ_DIR/ansible_ssh_env.sh
+export DEV_SCRIPTS_DIR=./
+source $DEV_SCRIPTS_DIR/ansible_ssh_env.sh
 
 # With LANG set to everything else than C completely undercipherable errors
 # like "file not found" and decoding errors will start to appear during scripts
