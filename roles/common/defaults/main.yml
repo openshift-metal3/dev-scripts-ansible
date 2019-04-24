@@ -1,0 +1,15 @@
+# This directory is used to store a variety of files generated
+# during the deploy process (ansible inventory, ssh configuration, ssh
+# key files, etc)
+local_working_dir: "{{ lookup('env', 'HOME') }}/.rhhi"
+
+# this will define the user that ansible will connect with
+ssh_user: "{{ rhhi_user }}"
+
+# This is where we store generated artifacts (like ssh config files,
+# keys, deployment scripts, etc) on the undercloud.
+working_dir: "/home/{{ rhhi_user }}"
+
+# If running in chroot-like environments (containers)
+chrooted: false
+

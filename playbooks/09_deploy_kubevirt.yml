@@ -1,8 +1,0 @@
-- name: "09_deploy_kubevirt.sh"
-  hosts:  virthost
-  tasks:
-  - name: "09_deploy_kubevirt.sh"
-    shell: "{{ dev_scripts_dir }}/09_deploy_kubevirt.sh" 
-    args:
-      chdir: "{{ dev_scripts_dir }}"
-      creates: "{{ dev_scripts_dir }}/logs/09_deploy_kubevirt*.log"

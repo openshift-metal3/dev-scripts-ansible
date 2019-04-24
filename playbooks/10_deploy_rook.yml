@@ -1,8 +1,0 @@
-- name: "10_deploy_rook.sh"
-  hosts:  virthost
-  tasks:
-  - name: "10_deploy_rook.sh"
-    shell: "{{ dev_scripts_dir }}/10_deploy_rook.sh"
-    args:
-      chdir: "{{ dev_scripts_dir }}"
-      creates: "{{ dev_scripts_dir }}/logs/10_deploy_rook*.log"

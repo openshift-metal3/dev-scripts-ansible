@@ -52,3 +52,9 @@
     ansible_user: "root"
     ansible_host: "{{ virthost }}"
 
+- name: Generate ssh configuration
+  delegate_to: localhost
+  template:
+    src: ssh.config.j2
+    dest: "{{ local_working_dir }}/ssh.config.ansible"
+

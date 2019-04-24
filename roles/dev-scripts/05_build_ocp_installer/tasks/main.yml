@@ -1,0 +1,7 @@
+- name: run 05_build_ocp_installer.sh
+#  hosts:  virthost
+  shell: "{{ dev_scripts_dir }}/05_build_ocp_installer.sh" 
+  args:
+    chdir: "{{ dev_scripts_dir }}"
+    creates: "{{ dev_scripts_dir }}/logs/05_build_ocp_installer*.log"
+

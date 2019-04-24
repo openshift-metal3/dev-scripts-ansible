@@ -1,17 +1,17 @@
 # Add the virthost to the in-memory inventory. The inventory is not
 # written out to disk unless you call the `tripleo-inventory` role.
-- name: Add the virthost to the inventory
-  hosts: localhost
-  tasks:
-    - name: Add virthost
-      add_host:
-        name: "{{ virthost }}"
-        groups: "virthost"
-        ansible_fqdn: "{{ virthost }}"
-        ansible_user: "root"
-        ansible_host: "{{ virthost }}"
-  tags:
-    - provision
+#- name: Add the virthost to the inventory
+#  hosts: localhost
+#  tasks:
+#    - name: Add virthost
+#      add_host:
+#        name: "{{ virthost }}"
+#        groups: "virthost"
+#        ansible_fqdn: "{{ virthost }}"
+#        ansible_user: "root"
+#        ansible_host: "{{ virthost }}"
+#  tags:
+#    - provision
 
 # The `provision.yml` playbook is responsible for
 # creating an inventory entry for our `virthost` and for creating an
@@ -19,8 +19,79 @@
 - import_playbook: provision.yml
 
 - import_playbook: check-pull-secret.yml
-- import_playbook: add-virthost-to-inventory.yml
 - import_playbook: distribution-version-check.yml
-#- import_playbook: add-rhhi-user.yml
-#- import_playbook: rhhi-user-sudoers.yml
 - import_playbook: install-prerequisite-packages.yml
+
+
+- name: Run 01_install_requirements.sh
+  hosts: virthost
+  roles:
+    - dev-scripts/01_install_requirements
+  tags:
+    - 01_install_requirements
+
+- name: Run 02_configure_host.sh
+  hosts: virthost
+  roles:
+    - dev-scripts/02_configure_host
+  tags:
+    - 02_configure_host
+
+- name: Run 03_ocp_repo_sync.sh
+  hosts: virthost
+  roles:
+    - dev-scripts/03_ocp_repo_sync
+  tags:
+    - 03_ocp_repo_sync
+
+- name: Run 04_setup_ironic.sh
+  hosts: virthost
+  roles:
+    - dev-scripts/04_setup_ironic
+  tags:
+    - 04_setup_ironic
+
+- name: Run 05_build_ocp_installer.sh
+  hosts: virthost
+  roles:
+    - dev-scripts/05_build_ocp_installer
+  tags:
+    - 05_build_ocp_installer
+
+- name: Run 06_create_cluster.sh
+  hosts: virthost
+  roles:
+    - dev-scripts/06_create_cluster
+  tags:
+    - 06_create_cluster
+
+- name: Run 08_deploy_bmo.sh
+  hosts: virthost
+  roles:
+    - dev-scripts/08_deploy_bmo
+  tags:
+    - 08_deploy_bmo
+
+- name: Run 09_deploy_kubevirt.sh
+  hosts: virthost
+  roles:
+    - dev-scripts/09_deploy_kubevirt
+  tags:
+    - 09_deploy_kubevirt
+
+- name: Run 10_deploy_rook.sh
+  hosts: virthost
+  roles:
+    - dev-scripts/10_deploy_rook
+  tags:
+    - 10_deploy_rook
+
+- name: Run 11_register_hosts.sh
+  hosts: virthost
+  roles:
+    - dev-scripts/11_register_hosts
+  tags:
+    - 11_register_hosts
+
+
+

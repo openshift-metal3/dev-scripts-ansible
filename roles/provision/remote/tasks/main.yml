@@ -11,40 +11,15 @@
   args:
     creates: "{{ virt_host_key }}"
 
-- when: not chrooted|bool
-  block:
-    - name: Ensure tuned is installed
-      package:
-        name: "tuned"
-        state: "present"
-      become: true
-
-    - name: Ensure tuned is enabled and started
-      service:
-        name: "tuned"
-        enabled: "yes"
-        state: "started"
-      become: true
-
-    - name: Retrieve current tuned profile
-      command: tuned-adm active
-      register: tuned
-      changed_when: false
-
-    - name: Set tuned profile if not already set
-      command: tuned-adm profile "{{ tuned_profile }}"
-      become: true
-      when: tuned.stdout.find(tuned_profile) != 1
-
-    # Create a non-root user on the target host.  This is the user that
-    # will own the virtual infrastructure on which we deploy openstack.
-    - name: Create non-root user
-      user:
-        name: "{{ rhhi_user }}"
-        state: present
-        shell: /bin/bash
-        create_home: true
-      become: true
+# Create a non-root user on the target host.  This is the user that
+# will own the virtual infrastructure on which we deploy dev-scripts
+- name: Create non-root user
+  user:
+    name: "{{ rhhi_user }}"
+    state: present
+    shell: /bin/bash
+    create_home: true
+  become: true
 
 - name: Get the non-root user UID
   command: "id {{ rhhi_user }} -u"
@@ -73,7 +48,7 @@
 # `.ssh/authorized_keys` file for the non-root user.
 - name: Configure non-root user authorized_keys
   authorized_key:
-    user: "{{ ssh_user }}"
+    user: "{{ rhhi_user }}"
     key: "{{ lookup('file', virt_host_key|quote + '.pub')|default('') }}"
   become: true
 

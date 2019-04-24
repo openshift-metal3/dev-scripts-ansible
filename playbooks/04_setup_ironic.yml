@@ -1,8 +1,0 @@
-- name: "04_setup_ironic.sh"
-  hosts:  virthost
-  tasks:
-  - name: "04_setup_ironic.sh"
-    shell: "{{ dev_scripts_dir }}/04_setup_ironic.sh" 
-    args:
-      chdir: "{{ dev_scripts_dir }}"
-      creates: "{{ dev_scripts_dir }}/logs/04_setup_ironic*.log"

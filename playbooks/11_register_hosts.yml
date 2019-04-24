@@ -1,8 +1,0 @@
-- name: "11_register_hosts.sh"
-  hosts:  virthost
-  tasks:
-  - name: "11_register_hosts.sh"
-    shell: "{{ dev_scripts_dir }}/11_register_hosts.sh"
-    args:
-      chdir: "{{ dev_scripts_dir }}"
-      creates: "{{ dev_scripts_dir }}/logs/11_register_hosts*.log"

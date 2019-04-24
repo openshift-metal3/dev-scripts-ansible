@@ -1,0 +1,7 @@
+- name: run 02_configure_host.sh
+#  hosts:  virthost
+  shell: "{{ dev_scripts_dir }}/02_configure_host.sh" 
+  args:
+    chdir: "{{ dev_scripts_dir }}"
+    creates: "{{ dev_scripts_dir }}/logs/02_configure_host*.log"
+

@@ -1,0 +1,7 @@
+- name: run 08_deploy_bmo.sh
+#  hosts:  virthost
+  shell: "{{ dev_scripts_dir }}/08_deploy_bmo.sh" 
+  args:
+    chdir: "{{ dev_scripts_dir }}"
+    creates: "{{ dev_scripts_dir }}/logs/08_deploy_bmo*.log"
+
