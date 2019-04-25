@@ -2,7 +2,7 @@
   hosts: virthost
   tasks:
   - git:
-      repo:  https://github.com/openshift-metalkube/dev-scripts.git
+      repo:  https://github.com/openshift-metal3/dev-scripts.git
       dest:  "/home/{{ rhhi_user }}/dev-scripts"
         
     
