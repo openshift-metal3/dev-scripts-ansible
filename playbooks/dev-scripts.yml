@@ -21,6 +21,7 @@
 - import_playbook: check-pull-secret.yml
 - import_playbook: distribution-version-check.yml
 - import_playbook: install-prerequisite-packages.yml
+- import_playbook: pull-dev-scripts-repo.yml
 
 
 - name: Run 01_install_requirements.sh
