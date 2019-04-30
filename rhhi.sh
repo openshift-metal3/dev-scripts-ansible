@@ -15,9 +15,10 @@ source $DEV_SCRIPTS_DIR/ansible_ssh_env.sh
 # or even ansible modules
 LANG=C
 
-DEFAULT_OPT_TAGS=""
+DEFAULT_OPT_TAGS="provision,install_requirements,configure_host,ocp_repo_sync,setup_ironic,build_ocp_installer,create_cluster,deploy_bmo,deploy_kubevirt,deploy_rook,register_hosts"
 
 : ${OPT_WORKDIR:=~/.rhhi}
+: ${OPT_TAGS:=$DEFAULT_OPT_TAGS}
 
 if [ "$#" -lt 1 ]; then
     if [ "${VIRTHOST:-}" == "" ]; then
@@ -33,8 +34,10 @@ fi
 
 #mkdir $OPT_WORKDIR
 
-ansible-playbook -vvvvvv \
+ansible-playbook \
+    -vvvv \
     -e virthost=$VIRTHOST \
     -e local_working_dir=$OPT_WORKDIR \
+    ${OPT_TAGS:+-t $OPT_TAGS} \
     playbooks/dev-scripts.yml
 

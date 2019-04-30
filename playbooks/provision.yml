@@ -26,8 +26,6 @@
 - name: Add the virthost node to the generated inventory
   hosts: localhost
   gather_facts: true
-  roles:
-#    - tripleo-inventory
   tags:
     - provision
 

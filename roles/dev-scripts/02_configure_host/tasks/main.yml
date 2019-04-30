@@ -4,4 +4,3 @@
   args:
     chdir: "{{ dev_scripts_dir }}"
     creates: "{{ dev_scripts_dir }}/logs/02_configure_host*.log"
-
