@@ -1,0 +1,47 @@
+---
+- name: "Clean up any existing dev-scripts deployments"
+  hosts: virthost
+  tasks:
+  - name: "Check to see if dev-scripts already exists"
+    stat:
+      path: "{{ dev_scripts_dir }}"
+    register: dev_scripts_exists
+  - command:
+      make clean
+    args:
+      chdir: "{{ dev_scripts_dir }}"
+    when: dev_scripts_exists.stat.exists == True
+  tags:
+  - clean
+
+- name: "Shut down existing, conflicting bridges"
+  hosts: virthost
+  tasks:
+# TODO(dtrainor): Clean this up; should probably be using hostvars to only check this once.  Also, find a better way
+# of determining what "exists" means - deployed successfully?  running?  maybe query an API etc...?
+  - name: "Check to see if dev-scripts already exists"
+    stat:
+      path: "{{ dev_scripts_dir }}"
+    register: dev_scripts_exists
+  - command:
+      ip link set dev provisioning down; ip link set dev baremetal down
+    become: true
+    when: dev_scripts_exists.stat.exists == True
+  tags:
+  - clean
+
+- name: "Remove existing, conflicting bridges"
+  hosts: virthost
+  tasks:
+# TODO(dtrainor): Clean this up; should probably be using hostvars to only check this once.  Also, find a better way
+# of determining what "exists" means - deployed successfully?  running?  maybe query an API etc...?
+  - name: "Check to see if dev-scripts already exists"
+    stat:
+      path: "{{ dev_scripts_dir }}"
+    register: dev_scripts_exists
+  - command:
+      brctl delbr provisioning; brctl delbr baremetal
+    become: true
+    when: dev_scripts_exists.stat.exists == True
+  tags:
+  - clean
