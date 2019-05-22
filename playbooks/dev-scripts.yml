@@ -21,8 +21,8 @@
 - import_playbook: check-pull-secret.yml
 - import_playbook: distribution-version-check.yml
 - import_playbook: install-prerequisite-packages.yml
+- import_playbook: clean-up-existing-dev-scripts.yml
 - import_playbook: pull-dev-scripts-repo.yml
-
 
 - name: Run 01_install_requirements.sh
   hosts: virthost
@@ -52,12 +52,12 @@
   tags:
     - setup_ironic
 
-- name: Run 05_build_ocp_installer.sh
-  hosts: virthost
-  roles:
-    - dev-scripts/05_build_ocp_installer
-  tags:
-    - build_ocp_installer
+#- name: Run 05_build_ocp_installer.sh
+#  hosts: virthost
+#  roles:
+#    - dev-scripts/05_build_ocp_installer
+#  tags:
+#    - build_ocp_installer
 
 - name: Run 06_create_cluster.sh
   hosts: virthost
