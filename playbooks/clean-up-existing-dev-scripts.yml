@@ -11,6 +11,13 @@
     args:
       chdir: "{{ dev_scripts_dir }}"
     when: dev_scripts_exists.stat.exists == True
+
+- name: "Delete old dev-scripts logs"
+  hosts: virthost
+  tasks:
+  - file: 
+      path: "{{ dev_scripts_dir }}/logs/*"
+      state: absent
   tags:
   - clean
 
@@ -23,10 +30,28 @@
     stat:
       path: "{{ dev_scripts_dir }}"
     register: dev_scripts_exists
-  - command:
-      "ip link set dev provisioning down; ip link set dev baremetal down"
+  - name: "Check to see of provisioning bridge exists"
+    command: 
+      ip link show provisioning
+    register: provisioning_bridge_exists
+    ignore_errors: true
+  - name: "Shut down provisioning bridge, if it exists"
     become: true
-    when: dev_scripts_exists.stat.exists == True
+    command: ip link set dev provisioning down
+    when:
+      - dev_scripts_exists.stat.exists == True
+      - provisioning_bridge_exists == True
+  - name: "Check to see of baremetal bridge exists"
+    command: 
+      ip link show baremetal
+    register: baremetal_bridge_exists
+    ignore_errors: true
+  - name: "Shut down baremetal bridge, if it exists"
+    command:  ip link set dev baremetal down
+    become: true
+    when:
+      - dev_scripts_exists.stat.exists == True
+      - baremetal_bridge_exists == True
   tags:
   - clean
 
@@ -39,9 +64,27 @@
     stat:
       path: "{{ dev_scripts_dir }}"
     register: dev_scripts_exists
-  - command:
-      "brctl delbr provisioning; brctl delbr baremetal"
+  - name: "Check to see of provisioning bridge exists"
+    command:
+      ip link show provisioning
+    register: provisioning_bridge_exists
+    ignore_errors: true
+  - name: "Remove provisioning bridge, if it exists"
     become: true
-    when: dev_scripts_exists.stat.exists == True
+    command: brctl delbr provisioning
+    when:
+      - dev_scripts_exists.stat.exists == True
+      - provisioning_bridge_exists == True
+  - name: "Check to see of baremetal bridge exists"
+    command: ip link show baremetal
+    register: baremetal_bridge_exists
+    ignore_errors: true
+  - name: "Remove baremetal bridge, if it exists"
+    command:  brctl delbr baremetal
+    become: true
+    when:
+      - dev_scripts_exists.stat.exists == True
+      - baremetal_bridge_exists == True
   tags:
   - clean
+
