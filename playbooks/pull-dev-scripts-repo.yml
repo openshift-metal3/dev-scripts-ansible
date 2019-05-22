@@ -1,9 +1,11 @@
-- name: "Check to see if pull secret was defined"
+- name: "Pull dev-scripts repo"
   hosts: virthost
   tasks:
   - git:
-      repo:  https://github.com/dantrainor/dev-scripts.git
+      repo:  https://github.com/openshift-metal3/dev-scripts.git
       dest:  "/home/{{ rhhi_user }}/dev-scripts"
-        
+      refspec: "{{ dev_scripts_refspec }}"
+      version: "master"
+      force: true
   tags:
     - provision 
