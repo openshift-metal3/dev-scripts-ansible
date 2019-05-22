@@ -1,0 +1,11 @@
+- name: "Pull console repo"
+  hosts: virthost
+  tasks:
+  - git:
+      repo:  https://github.com/openshift/console
+      dest:  "{{ go_path }}/src/github.com/openshift/console"
+      refspec: "{{ console_refspec }}"
+      version: "master"
+      force: true
+  tags:
+    - web_ui
