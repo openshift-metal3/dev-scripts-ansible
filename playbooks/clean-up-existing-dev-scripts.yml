@@ -6,7 +6,8 @@
     stat:
       path: "{{ dev_scripts_dir }}"
     register: dev_scripts_exists
-  - command:
+  - name: "Run 'make clean'"
+    command:
       make clean
     args:
       chdir: "{{ dev_scripts_dir }}"
