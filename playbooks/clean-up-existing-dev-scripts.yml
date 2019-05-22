@@ -15,9 +15,14 @@
 - name: "Delete old dev-scripts logs"
   hosts: virthost
   tasks:
+  - name: "Check to see if dev-scripts already exists"
+    stat:
+      path: "{{ dev_scripts_dir }}"
+    register: dev_scripts_exists
   - file: 
-      path: "{{ dev_scripts_dir }}/logs/*"
+      path: "{{ dev_scripts_dir }}/logs"
       state: absent
+    when: dev_scripts_exists.stat.exists == True
   tags:
   - clean
 
