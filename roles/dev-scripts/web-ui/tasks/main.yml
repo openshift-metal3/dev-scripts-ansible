@@ -1,0 +1,31 @@
+- name: "Pull web-ui repo"
+  git:
+    repo:  https://github.com/kubevirt/web-ui.git
+    dest:  "{{ go_path }}/src/github.com/kubevirt/web-ui"
+    refspec: "{{ web_ui_refspec }}"
+    version: "master"
+    force: true
+
+- name: "Build web-ui"
+  command:
+    ./build.sh
+  args:
+    chdir: "{{ go_path }}/src/github.com/kubevirt/web-ui"
+
+- name: "Open iptables 9000/tcp for web-ui"
+  iptables:
+    chain: INPUT
+    protocol: tcp
+    destination_port: 9000
+    jump: ACCEPT 
+
+- name: "Start web-ui"
+  environment:
+    BRIDGE_BASE_ADDRESS: http://$(hostname):9000
+    BRIDGE_LISTEN: http://$(hostname):9000
+  command:
+   # TODO(dtrainor): see if there's a better way of running this with individual tasks.  Probably need
+   # to see how 'oc login' token is stored, and then used with subsequent Ansible tasks
+   # TODO(dtrainor): find a better way to start this in the background; using nohup isn't great but 
+   # suitable right now as this is effectively an ephemeral service as of right now
+   "oc login -u kubeadmin -p $(cat {{ dev_scripts_dir }}/ocp/auth/kubeadmin-password) && source ./contrib/oc-environment.sh && nohup bin/bridge"
