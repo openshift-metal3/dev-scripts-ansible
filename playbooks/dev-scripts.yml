@@ -94,5 +94,9 @@
   tags:
     - register_hosts
 
-
-
+- name: Configure and start web-ui
+  hosts: virthost
+  roles:
+    - dev-scripts/web-ui
+  tags:
+    - web-ui
