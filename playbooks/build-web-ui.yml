@@ -1,0 +1,9 @@
+---
+- name: "Build web-ui"
+  hosts: virthost
+  tasks:
+    - command:
+        ./build.sh
+      chdir: "{{ go_path }}/src/github.com/kubevirt/web-ui"
+  tags:
+    - web-ui
