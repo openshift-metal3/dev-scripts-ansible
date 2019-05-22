@@ -24,7 +24,7 @@
       path: "{{ dev_scripts_dir }}"
     register: dev_scripts_exists
   - command:
-      ip link set dev provisioning down; ip link set dev baremetal down
+      "ip link set dev provisioning down; ip link set dev baremetal down"
     become: true
     when: dev_scripts_exists.stat.exists == True
   tags:
@@ -40,7 +40,7 @@
       path: "{{ dev_scripts_dir }}"
     register: dev_scripts_exists
   - command:
-      brctl delbr provisioning; brctl delbr baremetal
+      "brctl delbr provisioning; brctl delbr baremetal"
     become: true
     when: dev_scripts_exists.stat.exists == True
   tags:
