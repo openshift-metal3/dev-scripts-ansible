@@ -15,7 +15,7 @@ source $DEV_SCRIPTS_DIR/ansible_ssh_env.sh
 # or even ansible modules
 LANG=C
 
-DEFAULT_OPT_TAGS="clean,provision,install_requirements,configure_host,ocp_repo_sync,setup_ironic,build_ocp_installer,create_cluster,deploy_bmo,deploy_kubevirt,deploy_rook,register_hosts"
+DEFAULT_OPT_TAGS="clean,provision,install_requirements,configure_host,ocp_repo_sync,setup_ironic,build_ocp_installer,create_cluster,deploy_bmo,deploy_kubevirt,deploy_rook,register_hosts,web-ui"
 
 : ${OPT_WORKDIR:=~/.rhhi}
 : ${OPT_TAGS:=$DEFAULT_OPT_TAGS}
