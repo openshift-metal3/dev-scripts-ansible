@@ -1,6 +1,5 @@
 ---
-# Define the OpenShift Online Pull Secret
-# https://cloud.openshift.com/clusters/install#pull-secret
+# Define the pill secret.  This string is both the CI pull secret and the cloud.redhat.com pull secret combined
 pull_secret: ''
 
 # Define the non-root user to use on virthost
@@ -16,3 +15,15 @@ local_working_dir: "{{ lookup('env', 'HOME') }}/.rhhi"
 
 # If running in chroot-like environments (containers)
 chrooted: false
+
+# override the idefault dev-scripts refspec, allowing for the checkout of a specifi pull request; defaults to master
+# e.g. refs/pull/42/head
+dev_scripts_refspec: "refs/heads/master"
+
+# override the default web-ui refspec, allowing for the checkout of a specifi pull request; defaults to master
+# e.g. refs/pull/42/head
+#dev_scripts_refspec: "refs/remote/origin/master"
+web_ui_refspec: "refs/heads/master"
+
+# go path
+go_path: "{{ dev_scripts_dir }}/go"
