@@ -26,4 +26,4 @@ dev_scripts_refspec: "refs/heads/master"
 web_ui_refspec: "refs/heads/master"
 
 # go path
-go_path: "{{ dev_scripts_dir }}/go"
+go_path: "/home/{{ rhhi_user }}/go"
