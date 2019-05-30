@@ -6,6 +6,14 @@
     version: "master"
     force: true
 
+- name: "Pull console repo"
+  git:
+    repo:  https://github.com/openshift/console
+    dest:  "{{ go_path }}/src/github.com/openshift/console"
+    refspec: "{{ console_refspec }}"
+    version: "master"
+    force: true
+
 - name: "Build web-ui"
   command:
     ./build.sh
