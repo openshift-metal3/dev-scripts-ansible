@@ -73,12 +73,12 @@
   tags:
     - deploy_bmo
 
-- name: Run 09_deploy_kubevirt.sh
-  hosts: virthost
-  roles:
-    - dev-scripts/09_deploy_kubevirt
-  tags:
-    - deploy_kubevirt
+#- name: Run 09_deploy_kubevirt.sh
+#  hosts: virthost
+#  roles:
+#    - dev-scripts/09_deploy_kubevirt
+#  tags:
+#    - deploy_kubevirt
 
 - name: Run 10_deploy_rook.sh
   hosts: virthost
