@@ -80,12 +80,12 @@
 #  tags:
 #    - deploy_kubevirt
 
-- name: Run 10_deploy_rook.sh
-  hosts: virthost
-  roles:
-    - dev-scripts/10_deploy_rook
-  tags:
-    - deploy_rook
+#- name: Run 10_deploy_rook.sh
+#  hosts: virthost
+#  roles:
+#    - dev-scripts/10_deploy_rook
+#  tags:
+#    - deploy_rook
 
 - name: Run 11_register_hosts.sh
   hosts: virthost
