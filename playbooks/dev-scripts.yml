@@ -52,13 +52,6 @@
   tags:
     - setup_ironic
 
-#- name: Run 05_build_ocp_installer.sh
-#  hosts: virthost
-#  roles:
-#    - dev-scripts/05_build_ocp_installer
-#  tags:
-#    - build_ocp_installer
-
 - name: Run 06_create_cluster.sh
   hosts: virthost
   roles:
@@ -72,20 +65,6 @@
     - dev-scripts/08_deploy_bmo
   tags:
     - deploy_bmo
-
-#- name: Run 09_deploy_kubevirt.sh
-#  hosts: virthost
-#  roles:
-#    - dev-scripts/09_deploy_kubevirt
-#  tags:
-#    - deploy_kubevirt
-
-#- name: Run 10_deploy_rook.sh
-#  hosts: virthost
-#  roles:
-#    - dev-scripts/10_deploy_rook
-#  tags:
-#    - deploy_rook
 
 - name: Run 11_register_hosts.sh
   hosts: virthost
