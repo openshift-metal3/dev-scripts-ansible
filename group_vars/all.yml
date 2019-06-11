@@ -22,7 +22,6 @@ dev_scripts_refspec: "refs/heads/master"
 
 # override the default web-ui refspec, allowing for the checkout of a specifi pull request; defaults to master
 # e.g. refs/pull/42/head
-#dev_scripts_refspec: "refs/remote/origin/master"
 web_ui_refspec: "refs/heads/master"
 
 # go path
