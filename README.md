@@ -44,10 +44,10 @@ scripts will run in order:
 - `01_install_requirements.sh`
 - `02_configure_host.sh`
 - `03_ocp_repo_sync.sh`
--  04_setup_ironic.sh`
--  06_create_cluster.sh
--  08_deploy_bmo.sh
--  11_register_hosts.sh
+- `04_setup_ironic.sh`
+- `06_create_cluster.sh`
+- `08_deploy_bmo.sh`
+- `11_register_hosts.sh`
 
 An additional playbook will start [kubevirt/web-ui](https://github.com/kubevirt/web-ui), both with 
 the authentication bridge and the Yarn development server.
