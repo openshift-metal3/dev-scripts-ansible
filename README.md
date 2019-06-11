@@ -26,11 +26,11 @@ Edit group_vars/all.yml to your liking.  The only mandatory default is that of '
 are necessary to properly pull down containers that are required for [dev-scripts](https://github.com/openshift-metal3/dev-scripts/)
 
 Other notable options are:
--  rhhi_user
--  dev_scripts_dir
--  dev_scripts_refspec
--  web_ui_refspec
--  go_path
+- `rhhi_user`
+- `dev_scripts_dir`
+- `dev_scripts_refspec`
+- `web_ui_refspec`
+- `go_path`
 
 ## Installation
 
