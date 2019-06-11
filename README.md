@@ -2,7 +2,7 @@ Metal³ Ansible installer
 ===============================
 
 This set of playbooks provides an unattended installation of [dev-scripts](https://github.com/openshift-metal3/dev-scripts/) on a 
-local or remote system.  THis is useful for automatic deployments, setting up a development environment, or demonstrating Metal³ 
+local or remote system.  This is useful for automatic deployments, setting up a development environment, or demonstrating Metal³ 
 complete with the [kubevirt/web-ui](https://github.com/kubevirt/web-ui).
 
 This is very similar to how we do TripleO testing so we reuse some roles
