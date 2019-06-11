@@ -10,6 +10,8 @@ from tripleo-quickstart here.
 
 By default, this will deploy 'master' branches of each component, but can be modified given the options pointed out below.
 
+Additional information regarding the details and specifics of the deployment can be found in the [dev-scripts](https://github.com/openshift-metal3/dev-scripts/) documentation.
+
 # Pre-requisites
 
 - CentOS 7.5 or greater (installed from 7.4 or newer)
