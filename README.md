@@ -17,7 +17,7 @@ Additional information regarding the details and specifics of the deployment can
 - CentOS 7.5 or greater (installed from 7.4 or newer)
 - file system that supports d_type (see Troubleshooting section for more information)
 - ideally on a bare metal host
-- run as a user with passwordless sudo access
+- run as a user via ssh with passwordless sudo access to a remote system
 - get a valid pull secret (json string) from https://cloud.openshift.com/clusters/install#pull-secret
 
 # Instructions
